@@ -22,18 +22,18 @@ const Login = () => {
         </h1>
         {!isSignIn && (
           <input
-            className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100"
+            className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100 text-white"
             type="text"
             placeholder="Full Name"
           />
         )}
         <input
-          className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100"
+          className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100  text-white"
           type="email"
           placeholder="Email Address"
         />
         <input
-          className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100"
+          className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100  text-white"
           type="password"
           placeholder="Password"
         />
