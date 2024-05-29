@@ -5,15 +5,19 @@ import { auth } from "../utils/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { LOGIN_BG, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
-  const navigate = useNavigate();
+  const name = useRef(null);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     const msg = validateEmailPassword(
@@ -33,8 +37,31 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: USER_AVATAR,
+          })
+            .then(() => {
+              // Profile updated!
+
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              setErrorMessage(error);
+              // ...
+            });
           console.log(user);
-          navigate("/browse");
+
           // ...
         })
         .catch((error) => {
@@ -56,7 +83,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -76,10 +102,7 @@ const Login = () => {
     <div className="h-[95vh]">
       <Header />
       <div className="absolute ">
-        <img
-          className="object-fill w-full"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/41c789f0-7df5-4219-94c6-c66fe500590a/3149e5eb-4660-4e3d-9e65-b1e615229c64/IN-en-20240513-popsignuptwoweeks-perspective_alpha_website_large.jpg"
-        />
+        <img className="object-fill w-full" src={LOGIN_BG} />
       </div>
 
       <form
@@ -97,6 +120,7 @@ const Login = () => {
 
         {!isSignIn && (
           <input
+            ref={name}
             className="w-9/12 p-2 m-2 mx-10 my-3 bg-gray-800 bg-opacity-100 text-opacity-100 text-white"
             type="text"
             placeholder="Full Name"
