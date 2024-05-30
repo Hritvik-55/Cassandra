@@ -6,3 +6,12 @@ export const USER_AVATAR =
 
 export const LOGIN_BG =
   "https://assets.nflxext.com/ffe/siteui/vlv3/41c789f0-7df5-4219-94c6-c66fe500590a/3149e5eb-4660-4e3d-9e65-b1e615229c64/IN-en-20240513-popsignuptwoweeks-perspective_alpha_website_large.jpg";
+
+export const OPTIONS = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNDlhN2FlNmQ1NGVhMjc1MDg0OTA4MmUwNGY2OGRkMyIsInN1YiI6IjY2NTc0YTEzODZmMzA3MTdiZTVlZmEwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJEiCywqling7Icg3CexYS1SCGKmJD8jF-3gk_iWga4",
+  },
+};
