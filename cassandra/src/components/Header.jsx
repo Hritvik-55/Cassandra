@@ -42,11 +42,11 @@ const Header = () => {
       .catch((error) => {
         // An error happened.
         navigate("/error");
-        console.log(error);
+        // console.log(error);
       });
   };
   return (
-    <div>
+    <div className="">
       {user === null && (
         <div className="w-screen absolute  bg-gradient-to-b from-black z-10">
           <img className="w-44 mx-14" src={LOGO} alt="logo" />
@@ -54,11 +54,11 @@ const Header = () => {
       )}
 
       {user && (
-        <div className="flex justify-between">
+        <div className="absolute  w-screen flex justify-between bg-gradient-to-b from-black z-10">
           <div className="">
             <img className="w-44 mx-14" src={LOGO} alt="logo" />
           </div>
-          <div className="flex mx-20">
+          <div className="flex mx-20 ">
             <div className="my-auto">
               <img className="object-contain" src={USER_AVATAR} />
             </div>
@@ -67,7 +67,9 @@ const Header = () => {
                 <path fill="#fff" d="M0 0 L5 5 L10 0z" />
               </svg>
             </div>
-            <button onClick={handleSignOut}>SignOut</button>
+            <button className="text-white" onClick={handleSignOut}>
+              SignOut
+            </button>
           </div>
         </div>
       )}
