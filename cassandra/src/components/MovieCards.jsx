@@ -3,9 +3,9 @@ import { IMG_CDN_URL } from "../utils/constants";
 
 const MovieCards = ({ posterPath }) => {
   return (
-    <div className="w-80 h-48">
+    <div className="w-56 h-28 pr-2">
       <img
-        className="object-cover w-full h-full"
+        className="w-full h-full object-cover rounded-md"
         src={IMG_CDN_URL + posterPath}
       />
     </div>

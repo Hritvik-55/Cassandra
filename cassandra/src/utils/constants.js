@@ -16,4 +16,25 @@ export const OPTIONS = {
   },
 };
 
-export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w780/";
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const SUPPORTED_LANG = [
+  { identifier: "en", name: "English" },
+  { identifier: "hindi", name: "Hindi" },
+  { identifier: "spanish", name: "Spanish" },
+];
+
+export const lang = {
+  en: {
+    search: "Search",
+    gptSearchPlaceholder: "What's on your mind!!!",
+  },
+  hindi: {
+    search: "खोज",
+    gptSearchPlaceholder: "आपके दिमाग में क्या है!!!",
+  },
+  spanish: {
+    search: "buscar",
+    gptSearchPlaceholder: "¡¡¡Qué tienes en mente!!!",
+  },
+};
