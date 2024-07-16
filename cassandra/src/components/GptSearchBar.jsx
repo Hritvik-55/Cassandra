@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { GOOGLE_KEY, lang } from "../utils/constants";
+import { GOOGLE_KEY, lang, OPTIONS } from "../utils/constants";
 import { useRef } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -7,6 +7,17 @@ const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
   const genAI = new GoogleGenerativeAI(GOOGLE_KEY);
+  const searchMovieByTitle = async (movie) => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie +
+        "&include_adult=false&language=en-US&page=1",
+      OPTIONS
+    );
+    const json = await data.json();
+    const moviesData = json.results;
+    return moviesData;
+  };
   const handleGptSearch = async () => {
     // console.log(searchText.current.value);
     const gptQuery =
@@ -19,6 +30,18 @@ const GptSearchBar = () => {
     const text = response.text();
     const recommendedMovies = text.split(",");
     console.log(recommendedMovies);
+    const promiseArray = recommendedMovies.map((movie) =>
+      searchMovieByTitle(movie)
+    );
+    const tmdbResults = await Promise.all(promiseArray);
+    console.log(tmdbResults);
+    tmdbResults.map((movie, index) => console.log(movie[0].title));
+    // const filteredMovies = tmdbResults.filter((movie, index) => {
+    //   return (
+    //     movie?.title.toLowerCase() === recommendedMovies[index].toLowerCase()
+    //   );
+    // });
+    // console.log(filteredMovies);
   };
   return (
     <div className="absolute z-30 mt-[15%] w-full flex justify-center">
