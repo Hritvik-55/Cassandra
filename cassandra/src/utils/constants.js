@@ -38,3 +38,5 @@ export const lang = {
     gptSearchPlaceholder: "¡¡¡Qué tienes en mente!!!",
   },
 };
+
+export const GOOGLE_KEY = "AIzaSyCIxnQW8VA60sdefnkeK7eKQ7VK4WaNjNI";
