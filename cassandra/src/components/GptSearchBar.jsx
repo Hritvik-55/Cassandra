@@ -1,9 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GOOGLE_KEY, lang, OPTIONS } from "../utils/constants";
 import { useRef } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { addGptMovieResult } from "../utils/gptSlice";
+import GptMovieSuggestions from "./GptMovieSuggestions";
 
 const GptSearchBar = () => {
+  const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
   const genAI = new GoogleGenerativeAI(GOOGLE_KEY);
@@ -35,13 +38,18 @@ const GptSearchBar = () => {
     );
     const tmdbResults = await Promise.all(promiseArray);
     console.log(tmdbResults);
-    tmdbResults.map((movie, index) => console.log(movie[0].title));
-    // const filteredMovies = tmdbResults.filter((movie, index) => {
-    //   return (
-    //     movie?.title.toLowerCase() === recommendedMovies[index].toLowerCase()
-    //   );
-    // });
-    // console.log(filteredMovies);
+    const filteredTmdbResults = tmdbResults.map((moviesFromSearch) => {
+      return moviesFromSearch.filter((movie) => {
+        return recommendedMovies.some(
+          (recommendedMovie) =>
+            recommendedMovie.toLowerCase().trim() ===
+            movie.title.toLowerCase().trim()
+        );
+      });
+    });
+    console.log(filteredTmdbResults);
+    const flattenedResults = filteredTmdbResults.flat();
+    dispatch(addGptMovieResult(flattenedResults));
   };
   return (
     <div className="absolute z-30 mt-[15%] w-full flex justify-center">
@@ -62,6 +70,7 @@ const GptSearchBar = () => {
           {lang[langKey].search}
         </button>
       </form>
+      <GptMovieSuggestions />
     </div>
   );
 };
