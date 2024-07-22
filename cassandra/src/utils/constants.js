@@ -11,8 +11,7 @@ export const OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNDlhN2FlNmQ1NGVhMjc1MDg0OTA4MmUwNGY2OGRkMyIsInN1YiI6IjY2NTc0YTEzODZmMzA3MTdiZTVlZmEwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJEiCywqling7Icg3CexYS1SCGKmJD8jF-3gk_iWga4",
+    Authorization: "Bearer " + import.meta.env.VITE_TMDB_KEY,
   },
 };
 
@@ -39,4 +38,4 @@ export const lang = {
   },
 };
 
-export const GOOGLE_KEY = "AIzaSyCIxnQW8VA60sdefnkeK7eKQ7VK4WaNjNI";
+export const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_KEY;

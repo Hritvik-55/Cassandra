@@ -3,7 +3,7 @@ import { GOOGLE_KEY, lang, OPTIONS } from "../utils/constants";
 import { useRef } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { addGptMovieResult } from "../utils/gptSlice";
-import GptMovieSuggestions from "./GptMovieSuggestions";
+// import GptMovieSuggestions from "./GptMovieSuggestions";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
@@ -32,24 +32,29 @@ const GptSearchBar = () => {
     const response = await result.response;
     const text = response.text();
     const recommendedMovies = text.split(",");
-    console.log(recommendedMovies);
+    // console.log(recommendedMovies);
     const promiseArray = recommendedMovies.map((movie) =>
       searchMovieByTitle(movie)
     );
     const tmdbResults = await Promise.all(promiseArray);
-    console.log(tmdbResults);
-    const filteredTmdbResults = tmdbResults.map((moviesFromSearch) => {
-      return moviesFromSearch.filter((movie) => {
-        return recommendedMovies.some(
-          (recommendedMovie) =>
-            recommendedMovie.toLowerCase().trim() ===
-            movie.title.toLowerCase().trim()
-        );
-      });
-    });
-    console.log(filteredTmdbResults);
-    const flattenedResults = filteredTmdbResults.flat();
-    dispatch(addGptMovieResult(flattenedResults));
+    // console.log(tmdbResults);
+    // const filteredTmdbResults = tmdbResults.map((moviesFromSearch) => {
+    //   return moviesFromSearch.filter((movie) => {
+    //     return recommendedMovies.some(
+    //       (recommendedMovie) =>
+    //         recommendedMovie.toLowerCase().trim() ===
+    //         movie.title.toLowerCase().trim()
+    //     );
+    //   });
+    // });
+    // console.log(filteredTmdbResults);
+    // const flattenedResults = filteredTmdbResults.flat();
+    dispatch(
+      addGptMovieResult({
+        movieNames: recommendedMovies,
+        gptMovies: tmdbResults,
+      })
+    );
   };
   return (
     <div className="absolute z-30 mt-[15%] w-full flex justify-center">
@@ -70,7 +75,6 @@ const GptSearchBar = () => {
           {lang[langKey].search}
         </button>
       </form>
-      <GptMovieSuggestions />
     </div>
   );
 };
